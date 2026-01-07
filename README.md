@@ -36,8 +36,8 @@ The pipeline includes:
 
 ![image alt](https://github.com/kanishk083/DRONE-DETECTION/blob/36cf850bb54321e800fa55f0cb6f1ae51939fc95/Screenshot%202026-01-07%20160555.png)
 ![image alt](https://github.com/kanishk083/DRONE-DETECTION/blob/ff26b1d9f9197f029238630afdf9af478dd4f7e7/Screenshot%202026-01-07%20160506.png)
-![image alt](https://github.com/kanishk083/DRONE-DETECTION/blob/0dabe653e238a4565be4fb102221e28df21f7ee9/Screenshot%202026-01-07%20160555.png)
-https://github.com/kanishk083/DRONE-DETECTION/blob/0dabe653e238a4565be4fb102221e28df21f7ee9/Screenshot%202026-01-07%20160555.png
+![image alt](https://github.com/kanishk083/DRONE-DETECTION/blob/22f415af7fd0c721e8655c925fcabf7bbea9587b/Screenshot%202026-01-07%20160353.png)
+
 ## Key Features
 
 - Custom curated dataset (~2,783 high-resolution frames)
