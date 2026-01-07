@@ -35,6 +35,7 @@ The pipeline includes:
 ---
 
 ![image alt](https://github.com/kanishk083/DRONE-DETECTION/blob/36cf850bb54321e800fa55f0cb6f1ae51939fc95/Screenshot%202026-01-07%20160555.png)
+![image alt](https://github.com/kanishk083/DRONE-DETECTION/blob/ff26b1d9f9197f029238630afdf9af478dd4f7e7/Screenshot%202026-01-07%20160506.png)
 
 ## Key Features
 
