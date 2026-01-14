@@ -1,6 +1,6 @@
 # Drone Detection (YOLO11n)
 
-A complete pipeline for custom drone detection built on the YOLO11n (nano) architecture. This project targets the "small object detection" problem and focuses on distinguishing drones from birds across diverse environments (urban, rural, and open-sky scenes).
+A complete pipeline for custom drone detection built on the YOLO11n (nano) architecture. This project targets the "small object detection" problem and focuses on distinguishing drones from birds across diverse environments (urban, rural, and open-sky scenes) . 
 
 ---
 
