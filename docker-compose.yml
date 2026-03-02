@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  drone-api:
+    build: .
+    container_name: drone-detection-api
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    # If using GPU inference via Docker, uncomment below:
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
