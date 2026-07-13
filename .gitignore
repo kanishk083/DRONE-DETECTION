@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Node / Next.js (frontend has its own .gitignore too)
+node_modules/
+.next/
+
+# Generated calibration frames (recreated by scripts/export_model.py)
+scripts/calibration_images/
+
+# Temp files
+*.tmp.mp4
+*.log
+
+# Personal recording script (not part of the project)
+VIDEO_SCRIPT.md
