@@ -7,7 +7,7 @@ Drone-vs-bird aerial detection system: a custom-trained **YOLO11n** model, a **F
 
 ---
 
-## ⚡ Performance Optimization — Results
+##  Performance Optimization — Results
 
 **Hardware:** Intel Core i7-1185G7 @ 3.00GHz (4 cores, AVX-512 VNNI) + Iris Xe iGPU · **no discrete GPU**
 **Test:** drone-swarm video, 768×432 @ 30fps, 441 frames · every stage includes full per-frame work: decode → detect → track
