@@ -101,7 +101,7 @@ flowchart LR
 
 ---
 
-## 🧠 Engineering notes (what actually went wrong & how it was fixed)
+##  Engineering notes (what actually went wrong & how it was fixed)
 
 1. **Full INT8 quantization gave ZERO detections.** The YOLO detection head (DFL box decoder, `model.23`, 172 nodes) is numerically too fragile for 8-bit. Fix: quantize only the backbone/neck (~90% of compute), keep the head in float → full accuracy restored. See `scripts/export_model.py`.
 2. **The threaded pipeline silently dropped 158 of 441 frames.** The end-of-stream sentinel was `None` — but an empty queue *also* returns `None` on timeout, so consumers mistook a momentary stall for end-of-video. Fix: a unique `object()` sentinel. Classic producer-consumer bug, caught because frame counts didn't match.
