@@ -112,7 +112,7 @@ flowchart LR
 
 ---
 
-## 🚀 Quickstart
+##  Quickstart
 
 ```bash
 git clone https://github.com/kanishk083/DRONE-DETECTION.git
@@ -171,7 +171,7 @@ Or with Docker (backend only): `docker-compose up`
 
 ---
 
-## 🎓 Model training
+##  Model training
 
 The detector is a **YOLO11n** fine-tuned to classify small aerial targets as `drone` or `bird` — visually similar at distance, a classic false-positive source in surveillance systems.
 
@@ -187,7 +187,7 @@ The detector is a **YOLO11n** fine-tuned to classify small aerial targets as `dr
 
 ---
 
-## 🙏 Acknowledgements
+##  Acknowledgements
 
 - [Ultralytics](https://github.com/ultralytics/ultralytics) — YOLO11 models and export tooling
 - [ONNX Runtime](https://onnxruntime.ai/) & [OpenVINO](https://docs.openvino.ai/) — inference runtimes
