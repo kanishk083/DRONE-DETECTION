@@ -80,12 +80,12 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-    CAM["🎥 Camera Thread<br/>cap.read() loop"] -->|FramePacket| FB[("Frame Buffer<br/>live: latest-only q(1)<br/>file: blocking q(32)")]
-    FB --> DET["🔍 Detection Thread<br/>YOLO INT8 ONNX @416"]
+    CAM[" Camera Thread<br/>cap.read() loop"] -->|FramePacket| FB[("Frame Buffer<br/>live: latest-only q(1)<br/>file: blocking q(32)")]
+    FB --> DET[" Detection Thread<br/>YOLO INT8 ONNX @416"]
     DET -->|DetPacket| DB[("Detection Buffer")]
-    DB --> TRK["🎯 Tracking Thread<br/>ByteTrack — stable IDs"]
+    DB --> TRK[" Tracking Thread<br/>ByteTrack — stable IDs"]
     TRK -->|TrackPacket| TB[("Tracking Buffer")]
-    TB --> OUT["🖥️ Main Thread<br/>draw boxes + FPS / save mp4"]
+    TB --> OUT[" Main Thread<br/>draw boxes + FPS / save mp4"]
 ```
 
 All three stages run **simultaneously on different frames** — throughput is set by the slowest stage (detection), not the sum of all stages. Live mode uses drop-oldest `maxsize=1` buffers so the display never lags behind the camera; file mode uses blocking buffers so every frame is processed.
