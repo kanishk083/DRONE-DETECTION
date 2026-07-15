@@ -55,7 +55,7 @@ Drone-vs-bird aerial detection system: a custom-trained **YOLO11n** model, a **F
 
 ---
 
-## 🏗️ Architecture
+##  Architecture
 
 ### System architecture
 
