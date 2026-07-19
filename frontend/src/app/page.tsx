@@ -10,11 +10,15 @@ import { TelemetryPanel } from "@/components/TelemetryPanel";
 import { Hero3D } from "@/components/Hero3D";
 import { Navbar } from "@/components/landing/Navbar";
 import { FeaturesGrid } from "@/components/landing/FeaturesGrid";
+import { LiveIntelDashboard } from "@/components/LiveIntelDashboard";
 
 // Types
 import { DetectionResponse } from "@/types";
 
+type AnalysisMode = "image" | "live";
+
 export default function Home() {
+  const [mode, setMode] = useState<AnalysisMode>("image");
   const [isLoading, setIsLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [results, setResults] = useState<DetectionResponse | null>(null);
@@ -68,6 +72,32 @@ export default function Home() {
 
       {/* 3. The YOLO Analysis Dashboard */}
       <main id="analyze" className="max-w-7xl mx-auto px-6 py-24 relative z-20 scroll-mt-16">
+
+        {/* Mode selector: single-image scan vs live video intelligence */}
+        <div className="flex justify-center mb-12">
+          <div className="inline-flex rounded-lg border border-slate-800 bg-[#0a0a0a] p-1 font-mono text-xs">
+            {([
+              ["image", "IMAGE SCAN"],
+              ["live", "LIVE INTELLIGENCE"],
+            ] as [AnalysisMode, string][]).map(([m, label]) => (
+              <button
+                key={m}
+                onClick={() => setMode(m)}
+                className={`px-5 py-2 rounded-md tracking-widest transition-colors ${
+                  mode === m
+                    ? "bg-emerald-500/10 text-emerald-400 border border-emerald-800"
+                    : "text-slate-500 hover:text-slate-300 border border-transparent"
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {mode === "live" ? (
+          <LiveIntelDashboard />
+        ) : (
         <AnimatePresence mode="wait">
           {!results ? (
             <motion.section
@@ -135,6 +165,7 @@ export default function Home() {
             </motion.section>
           )}
         </AnimatePresence>
+        )}
       </main>
 
       {/* 4. Features/Context Grid */}

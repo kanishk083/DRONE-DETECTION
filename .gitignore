@@ -11,6 +11,9 @@ node_modules/
 # Generated calibration frames (recreated by scripts/export_model.py)
 scripts/calibration_images/
 
+# Datasets (downloaded via Roboflow — see scripts/eval_dataset.py)
+data/
+
 # Temp files
 *.tmp.mp4
 *.log
