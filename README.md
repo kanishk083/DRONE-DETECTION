@@ -101,6 +101,72 @@ flowchart LR
 
 ---
 
+##  KITE — Kinematic Intelligence & Threat Engine
+
+Drones and birds are visually similar at distance — the classic false-positive
+source. KITE classifies targets by **how they move**, not just how they look:
+a 4th pipeline stage after tracking that extracts per-track kinematic features
+(straightness, wingbeat periodicity via FFT, hover score, turn geometry),
+fuses them with YOLO's appearance confidence, predicts each track's path with
+a Kalman filter, scores threat against user-drawn keep-out zones, and streams
+everything live to the web dashboard over WebSocket.
+
+```mermaid
+flowchart LR
+    TRK[Tracking Thread<br/>ByteTrack IDs] -->|TrackPacket| INT[Intelligence Thread<br/>kinematics + fusion<br/>+ Kalman + threat + events]
+    INT -->|IntelPacket| OUT[draw / WebSocket<br/>trails, ghost paths,<br/>zones, event feed]
+```
+
+### Measured results (full protocol in [KINEMATICS_RESULTS.md](KINEMATICS_RESULTS.md))
+
+The appearance model alone is **degenerate on bird footage — it calls every
+bird track "drone"** (241/241 on four bird clips). Motion fixes what pixels
+can't:
+
+| Config | Bird false alarms | Drone recall | Balanced acc |
+|---|---|---|---|
+| Appearance-only | 241/241 (100%) | 21/21 (trivially — it calls everything drone) | 0.50 |
+| **Fused (KITE) @ 0.55** | **106/241 (−56%)** | 17/21 (81%) | **0.685** |
+
+- Intel stage overhead: **p50 3.1 ms / p95 5.4 ms** per frame on a ~20-track
+  swarm (scales with track count; 1–3 track scenes are sub-ms). FPS 35.1 → 30.3.
+- Full decision-threshold sweep (0.30–0.75) measured from one pipeline pass;
+  operating point = max balanced accuracy with drone recall ≥ 80%.
+- Independent stills check (`scripts/eval_dataset.py`, Roboflow drone-vs-bird
+  COCO test split, 293 images): the appearance model **never predicts "bird"
+  at all** — 0/61 bird boxes correct (53 called drone, 8 missed). It is a
+  single-class drone detector in practice; motion is the only available
+  bird-vs-drone signal.
+
+### Try it
+
+```bash
+# CLI: fused classification + trails + predicted paths + events
+python scripts/pipeline_demo.py --intel
+
+# with keep-out zones (implies --intel): zone breach / inbound events
+python scripts/pipeline_demo.py --zones zones.json
+
+# regenerate the measured results table
+python scripts/benchmark_kinematics.py
+
+# unit tests (synthetic trajectories — no video or model needed)
+python -m pytest tests/
+```
+
+**Web:** start both servers (below), open http://localhost:3000, switch the
+dashboard to **LIVE INTELLIGENCE**, upload a video — live tracked boxes
+colored by threat level, fading trails, Kalman ghost paths, click-to-draw
+keep-out zones, and a live tactical event feed. Click any target for its
+kinematic readout (wingbeat Hz, hover score, straightness, threat).
+
+*Assumptions & limits: mostly-static camera (ego-motion compensation is
+future work); tracks shorter than 8 frames fall back to appearance-only;
+wingbeat features need ≥ 12 samples. See the caveats note in
+[KINEMATICS_RESULTS.md](KINEMATICS_RESULTS.md).*
+
+---
+
 ##  Engineering notes (what actually went wrong & how it was fixed)
 
 1. **Full INT8 quantization gave ZERO detections.** The YOLO detection head (DFL box decoder, `model.23`, 172 nodes) is numerically too fragile for 8-bit. Fix: quantize only the backbone/neck (~90% of compute), keep the head in float → full accuracy restored. See `scripts/export_model.py`.

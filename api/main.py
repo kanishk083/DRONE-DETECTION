@@ -30,6 +30,13 @@ except Exception as e:
     model = None
     print(f"Warning: Model '{MODEL_PATH}' not found or failed to load. {e}")
 
+# KITE live video-intelligence streaming (Phase 3)
+try:
+    from .streaming import router as streaming_router
+    app.include_router(streaming_router)
+except Exception as e:
+    print(f"Warning: streaming module failed to load. {e}")
+
 @app.get("/health")
 def health_check():
     return {"status": "healthy", "model_loaded": model is not None}
